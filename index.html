@@ -9,6 +9,20 @@
     <link rel="stylesheet" crossorigin href="/watermonitoring/assets/index-CYqD4jU3.css">
   </head>
   <body>
+    <script>
+      // If redirected from GitHub Pages 404.html with ?redirect=, restore the original path
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect');
+        if (redirect) {
+          const decoded = decodeURIComponent(redirect);
+          // Use history.replaceState to set the original path without reloading
+          window.history.replaceState(null, '', decoded + window.location.hash);
+        }
+      } catch (e) {
+        // ignore
+      }
+    </script>
     <div id="root"></div>
   </body>
 </html>
