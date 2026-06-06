@@ -4,13 +4,13 @@ export const FORECAST_SEQ_LEN = 60
 export const FORECAST_FEATURE_DIM = 27
 
 export const FORECAST_MODEL_URL =
-  import.meta.env?.VITE_FORECAST_MODEL_URL || '/models/best-water/model.json'
+  import.meta.env?.VITE_FORECAST_MODEL_URL || (import.meta.env.BASE_URL || '/') + 'models/best-water/model.json'
 
 /**
  * File scaler training (Vite serve dari folder public/).
  * Path fisik: public/models/best-water/scaler.json
  */
-export const FORECAST_SCALER_PUBLIC_PATH = '/models/best-water/scaler.json'
+export const FORECAST_SCALER_PUBLIC_PATH = (import.meta.env.BASE_URL || '/') + 'models/best-water/scaler.json'
 
 export const FORECAST_SCALER_URL =
   import.meta.env?.VITE_FORECAST_SCALER_URL || FORECAST_SCALER_PUBLIC_PATH
