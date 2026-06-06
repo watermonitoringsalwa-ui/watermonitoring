@@ -10,6 +10,8 @@
     "build:chart-data": "python scripts/export_forecast_chart_data.py",
     "build:forecast": "npm run build:scaler && npm run build:chart-data && npm run build:model",
     "build": "vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -35,6 +37,7 @@
     "tailwindcss": "^4.1.13",
     "@tailwindcss/postcss": "^4.1.13",
     "postcss": "^8.5.6",
-    "autoprefixer": "^10.4.20"
+    "autoprefixer": "^10.4.20",
+    "gh-pages": "^5.0.0"
   }
 }

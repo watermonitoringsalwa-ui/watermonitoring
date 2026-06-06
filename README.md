@@ -59,3 +59,24 @@ Dashboard akan mengirim payload RPC seperti berikut:
 ```
 
 ESP32/perangkat harus memproses server-side RPC dari ThingsBoard dan mengirim telemetry balik agar status di dashboard ikut terkonfirmasi.
+
+## Deploy ke GitHub Pages
+
+1. Pasang paket deploy:
+
+```bash
+npm install --save-dev gh-pages
+```
+
+2. Tambahkan path base GitHub Pages di `vite.config.js` dan atur `VITE_BASE_URL` di file `env` produksi.
+   - Jika repository GitHub Anda bernama `ultrasonic-iot`, gunakan `/ultrasonic-iot/`.
+
+3. Jalankan deploy:
+
+```bash
+npm run deploy
+```
+
+4. Pastikan file `public/data/water-57L-daily.json` sudah tersedia, karena aplikasi memuat dataset dari `VITE_FORECAST_DATASET_URL`.
+
+Jika nama repo berbeda, ubah `VITE_BASE_URL` sesuai `/<repo-name>/`.
