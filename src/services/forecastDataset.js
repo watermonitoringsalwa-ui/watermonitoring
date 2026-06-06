@@ -2,8 +2,9 @@
  * Data harian dari CSV training untuk grafik prediksi.
  * File: public/data/water-57L-daily.json (generate: npm run build:chart-data)
  */
+const BASE = import.meta.env?.VITE_BASE_URL || '/'
 const DATASET_URL =
-  import.meta.env?.VITE_FORECAST_DATASET_URL || '/data/water-57L-daily.json'
+  import.meta.env?.VITE_FORECAST_DATASET_URL || `${BASE}data/water-57L-daily.json`
 
 let datasetPromise = null
 
