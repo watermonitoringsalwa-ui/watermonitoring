@@ -70,8 +70,12 @@ npm install --save-dev gh-pages
 
 2. Tambahkan path base GitHub Pages di `vite.config.js` dan atur `VITE_BASE_URL` di file `env` produksi.
    - Jika repository GitHub Anda bernama `ultrasonic-iot`, gunakan `/ultrasonic-iot/`.
+   - Jika repository GitHub Anda bernama `watermonitoring`, gunakan `/watermonitoring/`.
+   - Jika Anda menggunakan GitHub Pages dengan nama user/organization (`username.github.io`), gunakan `/`.
 
-3. Jalankan deploy:
+3. Tambahkan `gh-pages` sebagai dependency dev jika belum ada.
+
+4. Jalankan deploy:
 
 ```bash
 npm run deploy

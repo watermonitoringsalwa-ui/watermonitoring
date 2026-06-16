@@ -5,8 +5,9 @@
     <title>Redirect</title>
     <script type="text/javascript">
       const path = window.location.pathname.replace(/\/$/, '');
+      const base = path.split('/').slice(0, 2).join('/') || '/';
       const target = (path || '/') + window.location.search + window.location.hash;
-      window.location.replace('/watermonitoring/index.html?redirect=' + encodeURIComponent(target));
+      window.location.replace(base + '/index.html?redirect=' + encodeURIComponent(target));
     </script>
   </head>
   <body>
