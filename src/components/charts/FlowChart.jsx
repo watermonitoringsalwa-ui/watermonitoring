@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import {
   CartesianGrid,
   Legend,
@@ -11,10 +12,12 @@ import {
 import { Card, CardBody, CardHeader } from '../ui/Card.jsx'
 import { formatLpm } from '../../utils/format.js'
 import { CHART_AXIS_STROKE, CHART_GRID_STROKE, CHART_TOOLTIP_STYLE } from '../../utils/chartTheme.js'
+import { createChartDataWithDeviceTime } from '../../utils/deviceTime.js'
 
-function tickTime(iso) {
-  if (!iso) return ''
-  return iso.slice(11, 19)
+function tickTime(displayTime) {
+  if (!displayTime) return ''
+  // displayTime is already formatted as HH:MM:SS from createChartDataWithDeviceTime
+  return displayTime
 }
 
 const SERIES = [
@@ -23,11 +26,16 @@ const SERIES = [
 ]
 
 export function FlowChart({ history }) {
-  const data = (Array.isArray(history) ? history : []).slice(-80).map((h) => ({
-    t: h.timestamp,
-    flowIn: h.flow?.flowInLpm ?? h.flow?.flow1Lpm,
-    flowOut: h.flow?.flowOutLpm ?? h.flow?.flow2Lpm,
-  }))
+  const data = useMemo(() => {
+    const historyArray = Array.isArray(history) ? history : []
+    const baseData = createChartDataWithDeviceTime(historyArray, 80, 1)
+    return baseData.slice(-80).map((h) => ({
+      t: h.t,
+      displayTime: h.displayTime,
+      flowIn: h.flow?.flowInLpm ?? h.flow?.flow1Lpm,
+      flowOut: h.flow?.flowOutLpm ?? h.flow?.flow2Lpm,
+    }))
+  }, [history])
 
   return (
     <Card>

@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import {
   Bar,
   BarChart,
@@ -12,10 +13,22 @@ import { formatLiter, formatShortDate } from '../../utils/format.js'
 import { CHART_AXIS_STROKE, CHART_GRID_STROKE, CHART_TOOLTIP_STYLE } from '../../utils/chartTheme.js'
 
 export function DailyConsumptionChart({ dailyConsumption }) {
-  const data = (Array.isArray(dailyConsumption) ? dailyConsumption : []).slice(-14).map((d) => ({
-    day: formatShortDate(d.date),
-    liters: d.liters,
-  }))
+  const data = useMemo(() => {
+    const consumption = Array.isArray(dailyConsumption) ? dailyConsumption : []
+    
+    // If no data, show empty bars with today's date
+    if (consumption.length === 0) {
+      const today = new Date()
+      return [
+        { day: formatShortDate(today.toISOString()), liters: null }
+      ]
+    }
+    
+    return consumption.slice(-14).map((d) => ({
+      day: formatShortDate(d.date),
+      liters: d.liters,
+    }))
+  }, [dailyConsumption])
 
   return (
     <Card>

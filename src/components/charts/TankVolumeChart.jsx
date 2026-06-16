@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import {
   Area,
   AreaChart,
@@ -10,17 +11,24 @@ import {
 import { Card, CardBody, CardHeader } from '../ui/Card.jsx'
 import { formatLiter } from '../../utils/format.js'
 import { CHART_AXIS_STROKE, CHART_GRID_STROKE, CHART_TOOLTIP_STYLE } from '../../utils/chartTheme.js'
+import { createChartDataWithDeviceTime } from '../../utils/deviceTime.js'
 
-function tickTime(iso) {
-  if (!iso) return ''
-  return iso.slice(11, 19)
+function tickTime(displayTime) {
+  if (!displayTime) return ''
+  // displayTime is already formatted as HH:MM:SS from createChartDataWithDeviceTime
+  return displayTime
 }
 
 export function TankVolumeChart({ history }) {
-  const data = (Array.isArray(history) ? history : []).slice(-80).map((h) => ({
-    t: h.timestamp,
-    v: h.tank?.currentVolumeLiter,
-  }))
+  const data = useMemo(() => {
+    const historyArray = Array.isArray(history) ? history : []
+    const baseData = createChartDataWithDeviceTime(historyArray, 80, 1)
+    return baseData.slice(-80).map((h) => ({
+      t: h.t,
+      displayTime: h.displayTime,
+      v: h.tank?.currentVolumeLiter,
+    }))
+  }, [history])
 
   return (
     <Card>
